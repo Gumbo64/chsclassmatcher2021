@@ -1,66 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ../partials/header.ejs %>
+
 </head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="/stylesheets/index.css" rel="stylesheet">
+
+    <title>CHS 2021 Y10 Class Matcher</title>
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-  <% include ../partials/nav.ejs %>
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>Getting Started on Heroku with Node.js</h1>
-    <p>This is a sample Node application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started on Heroku with Node.js</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started on Heroku with Node.js</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/node-js-getting-started">Heroku Button</a> on the repository.</li>
-
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/node-js-getting-started/blob/main/package.json">package.json</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/node-js-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd node-js-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started on Heroku with Node.js</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-nodejs">Deploying Node Apps on Heroku</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
+<div class='' >
+  
 </div>
 
+<div class='d-grid gap-3'>
+  <br>
+  <h1 class='text-center '>CHS 2021 Class Matcher</h1>
+  <form method="POST" action="/">
+    <div class="mb-3 mx-auto normalwidth" >
+      <label for="fullname" class='form-label p-2'>Name</label><br>
+      <input type="text" class='form-control p-2' name="fullname" />
+    </div>
+
+    <div class="mb-3 mx-auto normalwidth" >   
+      <label class='form-label p-2' for="english">English / Geography / History</label><br>
+      <select class='form-control p-2' id="english" name="english">
+        <option value="red">Red</option>
+        <option value="orange">Orange</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+      </select>
+    </div>
+
+    <div class="mb-3 mx-auto normalwidth" >
+      <label class='form-label p-2'  for="elective1">Elective 1 class name</label><br>
+      <input class='form-control p-2' type="text" name="elective1" placeholder="eg. COM3"/>
+    </div>
+
+    <div class="mb-3 mx-auto normalwidth" >
+      <label class='form-label p-2' for="math">Math</label><br>
+      <select class='form-control p-2' id="math" name="math">
+        <option value="red">Red</option>
+        <option value="accelerated">Accelerated</option>
+        <option value="orange">Orange</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+      </select>
+    </div>
+
+    <div class="mb-3 mx-auto normalwidth" >
+      <label class='form-label p-2' for="GiftED">GiftED</label><br>
+      <select class='form-control p-2' id="gifted" name="gifted">
+        <option value="red">Red</option>
+        <option value="orange">Orange</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+      </select>
+    </div>
+
+    <div class="mb-3 mx-auto normalwidth" >
+      <label class='form-label p-2' for="science">Science / pdhpe</label><br>
+      <select class='form-control p-2' id="science" name="science">
+        <option value="red">Red</option>
+        <option value="orange">Orange</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+      </select>
+    </div>
+
+      <div class="mb-3 mx-auto normalwidth" >
+      <label class='form-label p-2' for="elective2">Elective 2 class name</label><br>
+      <input class='form-control p-2' type="text" name="elective2" placeholder="eg. CMP4"/>
+    </div>
+
+    <div class="mb-3 mx-auto normalwidth" >
+      <label class='form-label p-2' for="elective3">Elective 3 class name</label><br>
+      <input class='form-control p-2' type="text" name="elective3" placeholder="eg. ITE5"/>
+    </div>
+
+    <div class="mb-3 mx-auto buttonwidth" >
+      <input class="btn btn-primary form-control p-2" type="submit" />
+    </div>
+    <div class="mb-3 mx-auto buttonwidth" >
+      <a type="button" class="btn btn-outline-secondary form-control p-2" href="/db">Logged in previously / Guest</a>
+    </div>
+  </form>
+</div>
 
 </body>
 </html>

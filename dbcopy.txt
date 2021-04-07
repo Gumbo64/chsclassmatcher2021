@@ -1,0 +1,1 @@
+create table usertable (id text, fullname text,english text, elective1 text,math text, gifted text,science text, elective2 text, elective3 text);

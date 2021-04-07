@@ -1,0 +1,16 @@
+.buttonwidth{
+    width:25vw;
+}
+.normalwidth{
+    width:20vw;
+}
+
+@media only screen 
+and (orientation : portrait) {
+    .buttonwidth {
+        width:65vw;
+    }
+    .normalwidth{
+        width:60vw;
+    }
+}

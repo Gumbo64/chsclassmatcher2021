@@ -2,20 +2,219 @@
 <html>
 <head>
   <% include ../partials/header.ejs %>
+  
+  <link href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href='/stylesheets/db.css'>
+  <link href='/stylesheets/main.css'>
+  
+
 </head>
 
-<body>
+<body onload="clientheader()"> 
 
-<% include ../partials/nav.ejs %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="container">
-<h2>Database Results</h2>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link href="/stylesheets/index.css" rel="stylesheet">
 
-<ul>
+  <title>CHS 2021 Y10 Class Matcher</title>
+
+<script src="/db.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script>
+  function changeid(newid){
+    var myTab = document.getElementById('example');
+    console.log(newid)
+    for (i = 1; i < myTab.rows.length; i++) {
+      // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+      
+      let row = myTab.rows.item(i).cells;
+      // console.log([clientheaderrow.cells,objCells])
+      // console.log(objCells)
+      // console.log(row[0].innerText)
+      if (row[0].innerText == newid){
+        Cookies.set('id', row[0].innerText)
+        Cookies.set('fullname',row[1].innerText)
+        Cookies.set('english',row[2].innerText)
+        Cookies.set('elective1',row[3].innerText)
+        Cookies.set('math',row[4].innerText)
+        Cookies.set('gifted',row[5].innerText)
+        Cookies.set('science',row[6].innerText)
+        Cookies.set('elective2',row[7].innerText)
+        Cookies.set('elective3',row[8].innerText)
+      }
+      window.location.href = "/db";
+      // console.log(myTab.rows.item(i).cells[0])
+    }
+  }
+  const clientdetails = Cookies.get() || 'anonymous'
+  function rowsimilarity(clientrow,row){
+    score = 0
+    let colourcolumns = [2,4,5,6]
+    let electivecolumns = [3,7,8]
+    try {
+      for (var j=0; j < colourcolumns.length; j++) {
+        let index = colourcolumns[j]
+        if (row[index].innerText == clientrow[index].innerText){
+          if (index==2){
+            score +=3
+          }else if (index==6){
+            score +=2
+          }else{
+            score +=1
+          }
+        }
+      }
+      row_electives = []
+      client_electives=[]
+      for(var j=0;j<electivecolumns.length;j++){
+        let index = electivecolumns[j]
+        row_electives.push(row[index].innerText)
+        client_electives.push(clientrow[index].innerText)
+      }
+      console.log('~~~~~')
+      console.log(row_electives)
+      console.log(client_electives)
+
+      for (var j=0; j<client_electives.length;j++){
+        
+        if (row_electives.indexOf(client_electives[j]) > -1){
+          score += 1;
+        }
+      }
+
+    } catch (error) {
+      console.log('error')
+    }
+    
+    return score
+  }
+  function clientheader(){
+    document.getElementById('showlogin').innerText = "Logged in as: "+clientdetails['fullname'] + " (" + clientdetails['id'] + ")"
+    var myTab = document.getElementById('example');
+    clientheaderrow = document.getElementById('userrow')
+    // LOOP THROUGH EACH ROW OF THE TABLE AFTER HEADER.
+    if (clientdetails['id'] != 'anonymous'){
+
+      clientheaderrow.insertCell(0).innerText = clientdetails['id']
+      clientheaderrow.insertCell(1).innerText = clientdetails['fullname']
+      clientheaderrow.insertCell(2).innerText = clientdetails['english']
+      clientheaderrow.insertCell(3).innerText = clientdetails['elective1']
+      clientheaderrow.insertCell(4).innerText = clientdetails['math']
+      clientheaderrow.insertCell(5).innerText = clientdetails['gifted']
+      clientheaderrow.insertCell(6).innerText = clientdetails['science']
+      clientheaderrow.insertCell(7).innerText = clientdetails['elective2']
+      clientheaderrow.insertCell(8).innerText = clientdetails['elective3']
+      for (i = 1; i < myTab.rows.length; i++) {
+        // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+        
+        var objCells = myTab.rows.item(i).cells;
+
+        // console.log([clientheaderrow.cells,objCells])
+        // console.log(objCells)
+        score = rowsimilarity(clientheaderrow.cells,objCells)
+        // console.log(score)
+        myTab.rows.item(i).cells[0].onclick=function(){
+          changeid(this.innerText)
+        }
+        myTab.rows.item(i).insertCell(9).innerText = (score * 10).toString()
+        // console.log(myTab.rows.item(i).cells[0])
+
+        if (myTab.rows.item(i).cells[0] == clientdetails['id']){
+          myTab.rows.item(i).remove()
+          break
+        }        
+      }
+
+      document.getElementById('rowtitle').insertCell(9).innerText = "Shared classes %"
+      document.getElementById('rowfooter').insertCell(9).innerText = "Shared classes %"
+      document.getElementById('rowfooter').deleteCell(10)
+
+
+    }else{
+      clientheaderrow.remove()
+      
+    }
+    $(document).ready(function() {
+      $("#example").DataTable();
+    });
+
+  }
+
+
+
+</script>
+
+<div class='d-grid gap-3'>
+  <div class="container">
+    <h2>Results</h2>
+    <h3 id='showlogin'></h3>
+    <div class="mb-3 normalwidth float-right" >
+      <label for="fullname" class='form-label p-2'>Log in as ID OR click an ID on the table</label>
+      <input type="text" class='form-control p-2' name="newid" id='newid' />
+      <a type="button" class="btn btn-outline-secondary form-control p-2" onclick="changeid(document.getElementById('newid').value);">Log in</a>
+    </div>
+</div>
+
+
+<div class="container" >
+  <div class="row">
+    
+    <table id="example" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+        <tr id='rowtitle'>
+          <th>ID</th>
+          <th>Name</th>
+          <th>English / History / Geography</th>
+          <th>Elective 1</th>
+          <th>Math</th>
+          <th>GiftED</th>
+          <th>Science / PDHPE</th>
+          <th>Elective 2</th>
+          <th>Elective 3</th>
+        </tr>
+        <tr id='userrow'>
+          
+
+        </tr>
+      </thead>
+      <tfoot>
+        <tr id='rowfooter'>
+          <th>ID</th>
+          <th>Name</th>
+          <th>English / History / Geography</th>
+          <th>Elective 1</th>
+          <th>Math</th>
+          <th>GiftED</th>
+          <th>Science / PDHPE</th>
+          <th>Elective 2</th>
+          <th>Elective 3</th>
+        </tr>
+      </tfoot>
+      <tbody>
     <% results.forEach(function(r) { %>
-        <li><%= r.id %> - <%= r.name %></li>
+      <tr>
+        <td><%= r.id %></td>
+        <td><%= r.fullname %></td>
+        <td><%= r.english %></td>
+        <td><%= r.elective1 %></td>
+        <td><%= r.math %></td>
+        <td><%= r.gifted %></td>
+        <td><%= r.science %></td>
+        <td><%= r.elective2 %></td>
+        <td><%= r.elective3 %></td>
+      </tr>
     <% }); %>
-</ul>
+
+  </tbody>
+</table>
+
+</div>
+</div>
+
 
 </div>
 
